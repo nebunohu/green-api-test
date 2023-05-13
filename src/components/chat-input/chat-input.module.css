@@ -1,0 +1,24 @@
+.chatInputWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 17px;
+    padding: 10px 25px;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #f0f2f5;
+    height: 62px;
+}
+
+.chatInput {
+    border-radius: 6px;
+    height: 42px;
+    outline: none;
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+}

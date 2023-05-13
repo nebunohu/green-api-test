@@ -1,0 +1,14 @@
+.wrapper {
+    background-color: #fff;
+    padding: 9px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    max-width: 50%;
+    width: fit-content;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.own {
+    background-color: #d8f5d3;
+    align-self: flex-end;
+}
