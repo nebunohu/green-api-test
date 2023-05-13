@@ -1,31 +1,31 @@
 import { FC } from "react";
-import { Notification } from "../../app/types";
+import { ChatMessage } from "../../app/types";
 import styles from './message.module.css';
+import { getTime } from "../../app/utils";
 
 type MessageProps = {
-    notification: Notification;
+    message: ChatMessage;
 }
 
 const Message: FC<MessageProps> = ({
-    notification,
+    message: {
+        text,
+        time,
+        isOwn,
+    }
 }) => {
-    const isOwn = notification.body.senderData?.chatId !== notification.body.senderData?.sender;
     return (
         <div
             className={`${styles.wrapper} ${isOwn ? styles.own : ''}`}
         >
-            {notification.body.messageData?.typeMessage === 'extendedTextMessage' && (
-                <div
-                >
-                {notification.body.messageData.extendedTextMessageData?.text}
-                </div>
-            )}
-            {notification.body.messageData?.typeMessage === 'textMessage' && (
-                <div
-                >
-                {notification?.body.messageData.textMessageData?.textMessage}
-                </div>
-            )}
+            <div>
+                {text}
+            </div>
+            <div
+                className={`${styles.time}`}
+            >
+                {time ? getTime(time) : ''}
+            </div>
         </div>
     );
 };

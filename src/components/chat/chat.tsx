@@ -1,9 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import { useDeleteNotificationMutation, useGetNotificationsQuery } from "../../redux/messages-api/messages-api";
 import { useAppSelector } from "../../app/hooks";
-import { Notification } from "../../app/types";
+import { ChatMessage } from "../../app/types";
 import Message from "../message/message";
 import styles from './chat.module.css';
+import ChatInput from "../chat-input/chat-input";
 
 const Chat: FC = () => {
     const {
@@ -19,12 +20,40 @@ const Chat: FC = () => {
     const [
         deleteNotification
     ] = useDeleteNotificationMutation();
-    const [notifications, setNotifications] = useState<Array<Notification>>([]);
+    const [messages, setMessages] = useState<Array<ChatMessage>>([]);
     
     useEffect(() => {
         if (!isGetNotificationFetching && isGetNotificationSuccess && notification) {
             if (notification.body.typeWebhook === "outgoingAPIMessageReceived" ||
-                notification.body.typeWebhook === 'incomingMessageReceived') setNotifications((prevState) => [...prevState, notification]);
+                notification.body.typeWebhook === 'incomingMessageReceived'
+            ) {
+                let text = '';
+                if (notification.body.messageData?.extendedTextMessageData) {
+                    text = notification.body.messageData.extendedTextMessageData.text;
+                }
+                if (notification.body.messageData?.textMessageData) {
+                    text = notification.body.messageData.textMessageData.textMessage;
+                }
+                setMessages((prevState) => {
+                    const newState = [...prevState];
+                    const existingMessageIndex = prevState.findIndex((message) => message.idMessage === notification.body.idMessage);
+                    if (existingMessageIndex !== -1) {
+                            newState[existingMessageIndex].time = notification.body.timestamp;
+                        return newState;
+                    }
+                    
+                    return [
+                        ...newState,
+                        {
+                            idMessage: notification.body.idMessage,
+                            text: text,
+                            time: notification.body.timestamp,
+                            isOwn: notification.body.senderData?.chatId !== notification.body.senderData?.sender,
+                        },
+                    ]
+                });
+            }
+
             deleteNotification({
                 idInstance,
                 apiTokenInstance,
@@ -43,17 +72,21 @@ const Chat: FC = () => {
     }, []);
 
     return (
-        <div
-            className={`${styles.wrapper}`}
-        >
-            {notifications.map((notification) => (
-                <Message
-                    key={notification.receiptId}
-                    notification={notification}
-                />
-                
-            ))}
-        </div>
+        <>
+            <div
+                className={`${styles.wrapper}`}
+            >
+                {messages.map((message) => (
+                    <Message
+                        key={message.idMessage}
+                        message={message}
+                    />
+                ))}
+            </div>
+            <ChatInput
+                onSendMessage={(message: ChatMessage) => setMessages((prevState) => [...prevState, message])}
+            />
+        </>
     );
 };
 

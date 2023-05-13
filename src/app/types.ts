@@ -34,17 +34,17 @@ export type Message = {
 };
 
 export type SendMessageParameters = {
-    chatId: string; //	Да	Идентификатор чата
-    message: string; //	Да	Текст сообщения. Поддерживаются символы emoji 😃
-    quotedMessageId?: string; //	Нет	Идентификатор цитируемого сообщения,если указан то сообщение отправится с цитированием указанного сообщения чата
-    archiveChat?: boolean; //	Нет	Помещает в архив чат, в который отправлено сообщение. Принимает значения: true
+    chatId: string;
+    message: string;
+    quotedMessageId?: string;
+    archiveChat?: boolean;
     linkPreview? : boolean;
 };
 
 export type Notification = {
     receiptId: number;
     body: {
-        [key: string]: any;
+        // [key: string]: any;
         messageData?: {
             textMessageData?: {
                 textMessage: string;
@@ -81,6 +81,13 @@ export type Notification = {
             senderName: string;
         };
     };
+};
+
+export type ChatMessage = {
+    idMessage: string;
+    text: string;
+    time: number | null;
+    isOwn: boolean;
 };
 
 export type DeleteNotificationResponse = {

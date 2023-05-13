@@ -27,7 +27,12 @@ export const appSlice = createSlice({
       },
       clearChatId: (state) => {
         state.chatId = '';
-      }
+      },
+      logout: (state) => {
+        state.chatId = '';
+        state.apiTokenInstance = '';
+        state.idInstance = '';
+      },
     },
 });
 
@@ -35,6 +40,7 @@ export const {
   setCredentials,
   setChatId,
   clearChatId,
+  logout,
 } = appSlice.actions;
 
 export default appSlice.reducer;

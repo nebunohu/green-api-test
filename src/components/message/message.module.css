@@ -1,6 +1,7 @@
 .wrapper {
+    position: relative;
     background-color: #fff;
-    padding: 9px;
+    padding: 9px 42px 9px 9px;
     box-sizing: border-box;
     border-radius: 5px;
     max-width: 50%;
@@ -11,4 +12,12 @@
 .own {
     background-color: #d8f5d3;
     align-self: flex-end;
+}
+
+.time {
+    position: absolute;
+    bottom: 7px;
+    right: 7px;
+    color: #8a969c;
+    font-size: 10px;
 }

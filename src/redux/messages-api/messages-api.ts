@@ -43,7 +43,7 @@ export const messagesApi = createApi({
             },
             // invalidatesTags: ['notification']
         }),
-        sendMesssage: builder.mutation<any, { credentials: Credentials, requestBody: SendMessageParameters }>({
+        sendMesssage: builder.mutation<{ idMessage: string }, { credentials: Credentials, requestBody: SendMessageParameters }>({
             query({
                 credentials: {
                     idInstance,
