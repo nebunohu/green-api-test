@@ -4,6 +4,7 @@ import styles from './app.module.css';
 import LoginPage from '../../pages/login/login';
 import CreateChatPage from '../../pages/create-chat/create-chat';
 import ChatPage from '../../pages/chat/chat';
+import ProtectedRoute from '../protected-route/protected-route';
 
 const router = createBrowserRouter([
   {
@@ -12,11 +13,20 @@ const router = createBrowserRouter([
   },
   {
     path: "/create-chat",
-    element: <CreateChatPage />,
+    element: (
+      <ProtectedRoute>
+        <CreateChatPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/chat",
-    element: <ChatPage />,
+    element: 
+    (
+      <ProtectedRoute>
+        <ChatPage />
+      </ProtectedRoute>
+    ),
   },
 ]);
 
