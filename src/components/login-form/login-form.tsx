@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FormEvent, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { useNavigate } from "react-router";
 import { Credentials } from "../../app/types";
@@ -10,7 +10,7 @@ const LoginForm: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [formState, setFormState] = useState<Credentials>({ idInstance: '', apiTokenInstance: '' });
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<Credentials>();
+    const { register, handleSubmit, formState: { errors } } = useForm<Credentials>();
 
     const submitHandler = handleSubmit((data) => {
         dispatch(setCredentials(data));

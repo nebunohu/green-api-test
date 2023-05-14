@@ -1,32 +1,20 @@
-import { FC, FormEvent, useState } from "react";
+import { FC } from "react";
+import CreateChatForm from "../../components/create-chat-form/create-chat-form";
+import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
-import { setChatId } from "../../redux/app-slice";
-import { useNavigate } from "react-router";
+import { logout } from "../../redux/app-slice";
 
 const CreateChatPage: FC = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-    const [phone, setPhone] = useState('');
-
-    const submitHandler = (e: FormEvent) => {
-        e.preventDefault();
-        dispatch(setChatId(phone+'@c.us'));
-        navigate('/chat');
-    };
-
     return (
         <div>
-            <form onSubmit={submitHandler}>
-                <input
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                />
-                <button
-                    type="submit"
-                >
-                    Создать чат
-                </button>
-            </form>
+            <CreateChatForm />
+            <Link
+                to="/"
+                onClick={() => dispatch(logout())}
+            >
+                Выйти
+            </Link>
         </div>
     );
 };

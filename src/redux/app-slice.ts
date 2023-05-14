@@ -10,6 +10,7 @@ const initialState = {
     idInstance: '',
     apiTokenInstance: '',
     chatId: '',
+    isAuth: false,
 };
 
 export const appSlice = createSlice({
@@ -20,6 +21,7 @@ export const appSlice = createSlice({
         return {
           ...state,
           ...action.payload,
+          isAuth: true,
         };
       },
       setChatId: (state, action: Action<string>) => {
@@ -32,6 +34,7 @@ export const appSlice = createSlice({
         state.chatId = '';
         state.apiTokenInstance = '';
         state.idInstance = '';
+        state.isAuth = false;
       },
     },
 });
