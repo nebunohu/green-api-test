@@ -1,8 +1,9 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useSendMesssageMutation } from "../../redux/messages-api/messages-api";
 import styles from './chat-input.module.css';
 import { ChatMessage } from "../../app/types";
+import { openErrorModal } from "../../redux/app-slice";
 
 type ChatInputProps = {
     onSendMessage: (message: ChatMessage) => void;
@@ -10,6 +11,7 @@ type ChatInputProps = {
 const ChatInput: FC<ChatInputProps> = ({
     onSendMessage,
 }) => {
+    const dispatch = useAppDispatch();
     const {
         idInstance,
         apiTokenInstance,
@@ -20,6 +22,7 @@ const ChatInput: FC<ChatInputProps> = ({
         {
             data: sendMeddageResponse,
             isSuccess: isSendMessageSuccess,
+            isError: isSendMessageError,
         },      
     ] = useSendMesssageMutation();
     const [inputState, setInputState] = useState('');
@@ -53,6 +56,10 @@ const ChatInput: FC<ChatInputProps> = ({
             setInputState('');
         }
     }, [isSendMessageSuccess, sendMeddageResponse]);
+
+    useEffect(() => {
+        if (isSendMessageError) dispatch(openErrorModal('Ошибка при отправке сообщения.'))
+    }, [isSendMessageError]);
 
     return (
         <form

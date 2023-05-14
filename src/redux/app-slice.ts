@@ -11,6 +11,11 @@ const initialState = {
     apiTokenInstance: '',
     chatId: '',
     isAuth: false,
+    modal: {
+      isOpen: false,
+      error: '',
+      type: '',
+    }
 };
 
 export const appSlice = createSlice({
@@ -36,6 +41,16 @@ export const appSlice = createSlice({
         state.idInstance = '';
         state.isAuth = false;
       },
+      openErrorModal: (state, action: Action<string>) => {
+        state.modal.isOpen = true;
+        state.modal.type = 'error';
+        state.modal.error = action.payload;
+      },
+      closeModal: (state) => {
+        state.modal.isOpen = false;
+        state.modal.type = '';
+        state.modal.error = '';
+      },
     },
 });
 
@@ -44,6 +59,8 @@ export const {
   setChatId,
   clearChatId,
   logout,
+  openErrorModal,
+  closeModal,
 } = appSlice.actions;
 
 export default appSlice.reducer;

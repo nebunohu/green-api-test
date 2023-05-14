@@ -1,12 +1,14 @@
 import { FC, useEffect, useState } from "react";
 import { useDeleteNotificationMutation, useGetNotificationsQuery } from "../../redux/messages-api/messages-api";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { ChatMessage } from "../../app/types";
 import Message from "../message/message";
 import styles from './chat.module.css';
 import ChatInput from "../chat-input/chat-input";
+import { openErrorModal } from "../../redux/app-slice";
 
 const Chat: FC = () => {
+    const dispatch = useAppDispatch();
     const {
         idInstance,
         apiTokenInstance,
@@ -15,6 +17,7 @@ const Chat: FC = () => {
         data: notification,
         isSuccess: isGetNotificationSuccess,
         isFetching: isGetNotificationFetching,
+        isError: isGetNotificationError,
         refetch: notificationRefetch,
     } = useGetNotificationsQuery({ idInstance, apiTokenInstance });
     const [
@@ -61,6 +64,10 @@ const Chat: FC = () => {
             });
         }
     }, [isGetNotificationFetching]);
+
+    useEffect(() => {
+        if (isGetNotificationError) dispatch(openErrorModal('Ошибка при запросе сообщения. Проверьте правильность данных для авторизации.'))
+    }, [isGetNotificationError]);
 
     useEffect(() => {
         const timerId = setInterval(() => {
