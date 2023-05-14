@@ -33,18 +33,15 @@ const CreateChatForm: FC = () => {
                     required: true,
                     pattern: /\d{11}/,
                 }}
+                defaultValue=""
                 render={({ field }) => (
                     <InputMask
-                    className={`${errors.phone ? styles.error : ''}`}
+                        className={`${errors.phone ? styles.error : ''}`}
                         {...field}
                         mask="+79999999999"
                     />
                 )}
             />
-            {/* <input
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-            /> */}
             <button
                 type="submit"
             >
