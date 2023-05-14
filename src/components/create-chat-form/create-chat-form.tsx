@@ -19,7 +19,10 @@ const CreateChatForm: FC = () => {
         }
     });
     return (
-        <form onSubmit={submitHandler}>
+        <form
+            className={`${styles.wrapper}`}
+            onSubmit={submitHandler}
+        >
             <div>
                 Введите номер телефона
             </div>
