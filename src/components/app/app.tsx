@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, createHashRouter, RouterProvider } from 'react-router-dom';
 import styles from './app.module.css';
 import LoginPage from '../../pages/login/login';
 import CreateChatPage from '../../pages/create-chat/create-chat';
@@ -8,9 +8,9 @@ import ProtectedRoute from '../protected-route/protected-route';
 import { useAppSelector } from '../../app/hooks';
 import RequestErrorModal from '../request-error-modal/request-error-modal';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
-    path: "/",
+    path: "/*",
     element: <LoginPage />,
   },
   {
