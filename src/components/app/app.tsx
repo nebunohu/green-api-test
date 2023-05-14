@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBrowserRouter, createHashRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import styles from './app.module.css';
 import LoginPage from '../../pages/login/login';
 import CreateChatPage from '../../pages/create-chat/create-chat';
